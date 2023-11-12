@@ -31,10 +31,17 @@ class App {
    * состояние 'init'
    * */
   static initUser() {
-    User.fetch(() => this.setState(User.current() ? "user-logged" : "init"));
+    User.fetch((err, response)=>{
+      if(response.success){
+        this.setState('user-logged');
+      }else{
+        this.setState('init');
+      }
+    });
   }
 
   /**
+   * () =>this.setState((User.current() != null) ? "user-logged" : "init")
    * Инициализирует единственную динамическую
    * страницу (для отображения доходов/расходов по счёту)
    * */
@@ -159,8 +166,10 @@ class App {
     if (state === "user-logged") {
       this.update();
     }
-    if (state === "init") {
+    if (state === "init"){
+      this.element.classList.remove(`app_${this.state}`);
       this.clear();
+      this.update();
     }
   }
 

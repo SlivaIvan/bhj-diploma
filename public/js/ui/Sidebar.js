@@ -36,28 +36,27 @@ class Sidebar {
    * выходу устанавливает App.setState( 'init' )
    * */
   static initAuthLinks() {
-    const modatBtn = document.querySelectorAll('.menu-item');
-    modatBtn.forEach(elBtn => {
-      const elBtnClass = elBtn.classList[1];
-      elBtn.addEventListener('click', (e)=>{
-        e.preventDefault();
-        switch (elBtnClass){
-          case 'menu-item_login':
-            App.getModal('login').open();
-            break;
-          case 'menu-item_register':
-            App.getModal('register').open();
-            break;
-          case 'menu-item_logout':
-            User.logout(response => {
-              if(response && response.success){
-                App.setState( 'init' );
-              }
-            });
-            
-        }
-      })
-        
-    })
+    const loginBtn = document.querySelector('.menu-item_login');
+    const registerBtn = document.querySelector('.menu-item_register');
+    const logoutBtn = document.querySelector('.menu-item_logout');
+
+    loginBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      App.getModal('login').open();
+    });
+
+    registerBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      App.getModal('register').open();
+    });
+
+    logoutBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      User.logout((err, response) => {
+        if (response && response.success){
+          App.setState('init');
+        } 
+      });
+    });
   }
 }

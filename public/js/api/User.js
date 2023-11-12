@@ -48,9 +48,9 @@ class User {
       callback: (err, response) => {
         if(response && response.success){
           this.setCurrent(response.user);
+          //console.log(response);
         }else{
           this.unsetCurrent();
-          console.log(response.error)
         }
         callback(err, response)
       }
